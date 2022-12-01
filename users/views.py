@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import redirect, get_object_or_404, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView
@@ -36,6 +36,18 @@ class UpdateUser(LoginRequiredMixin, UpdateView):
     form_class = CustomUserChangeForm
     template_name = 'personal_area/update_user.html'
     success_url = reverse_lazy('personal_area')
+
+    def get_queryset(self, *args, **kwargs):
+        return (super().get_queryset(*args, **kwargs).filter(
+            username=self.request.user
+        ))
+
+    # def dispatch(self, request, *args, **kwargs):
+    #     """ Making sure that only authors can update stories """
+    #     obj = self.request.user
+    #     if obj != self.request.user:
+    #         return redirect(obj)
+    #     return super(UpdateUser, self).dispatch(request, *args, **kwargs)
 
 
 class UpdateAdmin(LoginRequiredMixin, UpdateView):
