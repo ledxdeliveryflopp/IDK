@@ -33,13 +33,6 @@ class DeleteUserView(LoginRequiredMixin, DeleteView):
         self.object.delete()
 
 
-# class AuthorRequiredMixin(object):
-#     def dispatch(self, request, *args, **kwargs):
-#         if self.object.author != self.request.user:
-#             return HttpResponseForbidden()
-#         return super(AuthorRequiredMixin, self).dispatch(request, *args, **kwargs)
-
-
 class UpdateUser(LoginRequiredMixin, UpdateView):
     """Класс обновления юзера"""
     login_url = 'login'
@@ -48,16 +41,14 @@ class UpdateUser(LoginRequiredMixin, UpdateView):
     template_name = 'personal_area/update_user.html'
     success_url = reverse_lazy('personal_area')
 
-    def get_queryset(self):
-        return (super().get_queryset().filter(
-            username=self.request.user
-        ))
-
-    # def dispatch(self, request, *args, **kwargs):
-    #     obj = self.request.user
-    #     if obj != self.request.user:
-    #         return render(request, 'vote_error.html')
-    #     return super(UpdateUser, self).dispatch(request, *args, **kwargs)
+    def dispatch(self, request, *args, **kwargs):
+        """проверка данных перед ответом """
+        if not request.user.is_authenticated:
+            return self.handle_no_permission()
+        obj = self.get_object()
+        if obj.username != self.request.user.username:
+            return render(request, '404.html')
+        return super(UpdateUser, self).dispatch(request, *args, **kwargs)
 
 
 class UpdateAdmin(LoginRequiredMixin, UpdateView):
@@ -77,12 +68,6 @@ class IndexView(ListView):
 
     def get_queryset(self):
         return Question.objects.order_by('-pub_date')
-
-# def handler404(request):
-#     response = render_to_response('404.html', {},
-#                               context_instance=RequestContext(request))
-#     response.status_code = 404
-#     return response
 
 
 class QuestionFullView(DetailView, LoginRequiredMixin):
