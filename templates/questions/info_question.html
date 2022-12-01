@@ -1,7 +1,6 @@
 <form action="{% url 'vote' question.id %}" method="post">
     {% csrf_token %}
-    <fieldset>
-    {% if question.pub_date < question.life_time %}
+    {% if question.pub_date < question.life_time or user.is_staff %}
             <img src="{{ question.question_image.url }}" alt="connect" style="max-height:150px">
             <h1>{{question.question_text}}</h1>
             <p><strong>Описание: {{ question.full_info }}</strong></p>
@@ -10,9 +9,8 @@
             <input type="radio" name="choice" id="choice{{forloop.counter}}" value="{{choice.id}}">
             <label for="choice{{forloop.counter}}">{{choice.choice_text}}</label><br>
             {% endfor %}
-        </fieldset>
-        <input type="submit" value="Vote">
     {% else %}
-        <p><strong>Такого голосования нет</strong></p> :(
+            <p>Такой заявки нет :(</p>
     {% endif %}
+    <input type="submit" value="Vote">
 </form>
