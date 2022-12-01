@@ -37,8 +37,8 @@ class UpdateUser(LoginRequiredMixin, UpdateView):
     template_name = 'personal_area/update_user.html'
     success_url = reverse_lazy('personal_area')
 
-    def get_queryset(self, *args, **kwargs):
-        return (super().get_queryset(*args, **kwargs).filter(
+    def get_queryset(self):
+        return (super().get_queryset().filter(
             username=self.request.user
         ))
 
