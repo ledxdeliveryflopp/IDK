@@ -5,6 +5,7 @@ from .models import CustomUser, Choice, Question
 class ChoiceInLine(admin.TabularInline):
     model = Choice
     extra = 3
+    readonly_fields = ['votes']
 
 
 class QuestionAdmin(admin.ModelAdmin):
