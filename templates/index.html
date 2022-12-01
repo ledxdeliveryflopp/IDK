@@ -41,9 +41,10 @@
               <p><a href="{% url 'info_question' question.id %}"> Название: {{ question.question_text }}</a></p>
               <img src="{{ question.question_image.url }}" alt="connect" style="max-height:150px">
               <p>Описание: {{ question.short_info }}</p>
+              <p><a href="{% url 'result_question' question.id %}"> Результаты опроса: </a></p>
               <p>Варианты ответов: </p>
               {% for choice in question.choice_set.all %}
-                <p>{{ choice.choice_text }} -- {{ choice.votes }} голос{{choice.votes|pluralize}}
+                <p>{{ choice.choice_text }} -- {{ choice.votes }} голос
                 </p>
               {% endfor %}
             </div>
@@ -53,6 +54,7 @@
                 <p><a href="{% url 'info_question' question.id %}"> Название: {{ question.question_text }}</a></p>
                 <img src="{{ question.question_image.url }}" alt="connect" style="max-height:150px">
                 <p>Описание: {{ question.short_info }}</p>
+                <p><a href="{% url 'result_question' question.id %}"> Результаты опроса: </a></p>
                 <p>Варианты ответов: </p>
                 {% for choice in question.choice_set.all %}
                   <p>{{choice.choice_text}} -- {{ choice.votes }} голос</p>

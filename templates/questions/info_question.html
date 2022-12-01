@@ -1,13 +1,19 @@
 <form action="{% url 'vote' question.id %}" method="post">
     {% csrf_token %}
+    {% for question in question_list %}
+    {% if question.pub_date < question.life_time %}
             <img src="{{ question.question_image.url }}" alt="connect" style="max-height:150px">
             <h1>{{question.question_text}}</h1>
-        <p><strong>Описание: {{ question.full_info }}</strong></p>
-        {% if error_message %}<p><strong> {{error_message}}</strong></p>{% endif %}
-        {% for choice in question.choice_set.all %}
-        <input type="radio" name="choice" id="choice{{forloop.counter}}" value="{{choice.id}}">
-        <label for="choice{{forloop.counter}}">{{choice.choice_text}}</label><br>
-        {% endfor %}
+            <p><strong>Описание: {{ question.full_info }}</strong></p>
+            {% if error_message %}<p><strong> {{error_message}}</strong></p>{% endif %}
+            {% for choice in question.choice_set.all %}
+            <input type="radio" name="choice" id="choice{{forloop.counter}}" value="{{choice.id}}">
+            <label for="choice{{forloop.counter}}">{{choice.choice_text}}</label><br>
+            {% endfor %}
+    {% endif %}
+    {% endfor %}
+    {% else %}
+    {% if error_message %}<p><strong> {{error_message}}</strong></p>{% endif %}
+
     </fieldset>
-<input type="submit" value="Vote">
 </form>

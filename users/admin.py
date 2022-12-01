@@ -9,7 +9,7 @@ class ChoiceInLine(admin.TabularInline):
 
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [ChoiceInLine]
-    readonly_fields = ['votes', 'voted_by', 'pub_date', 'life_time']
+    readonly_fields = ['votes', 'voted_by', 'id']
 
 
 admin.site.register(Question, QuestionAdmin)

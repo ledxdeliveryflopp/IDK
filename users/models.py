@@ -15,6 +15,7 @@ class CustomUser(AbstractUser):
 
 
 class Question(models.Model):
+    id = models.AutoField(primary_key=True, unique=True, verbose_name='id')
     question_text = models.CharField(max_length=200, verbose_name='Название')
     pub_date = models.DateTimeField(default=datetime.today(), null=False, verbose_name='Дата')
     life_time = models.DateTimeField(default=datetime.today() + timedelta(days=1),
