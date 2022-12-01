@@ -18,6 +18,10 @@ class Register(CreateView):
     success_url = reverse_lazy('login')
 
 
+def handle_page_not_found(request):
+    return redirect('homepage')
+
+
 class DeleteUserView(LoginRequiredMixin, DeleteView):
     """Класс удаления юзера"""
     login_url = 'login'
@@ -27,6 +31,13 @@ class DeleteUserView(LoginRequiredMixin, DeleteView):
 
     def form_valid(self):
         self.object.delete()
+
+
+# class AuthorRequiredMixin(object):
+#     def dispatch(self, request, *args, **kwargs):
+#         if self.object.author != self.request.user:
+#             return HttpResponseForbidden()
+#         return super(AuthorRequiredMixin, self).dispatch(request, *args, **kwargs)
 
 
 class UpdateUser(LoginRequiredMixin, UpdateView):
@@ -43,10 +54,9 @@ class UpdateUser(LoginRequiredMixin, UpdateView):
         ))
 
     # def dispatch(self, request, *args, **kwargs):
-    #     """ Making sure that only authors can update stories """
     #     obj = self.request.user
     #     if obj != self.request.user:
-    #         return redirect(obj)
+    #         return render(request, 'vote_error.html')
     #     return super(UpdateUser, self).dispatch(request, *args, **kwargs)
 
 
@@ -68,11 +78,11 @@ class IndexView(ListView):
     def get_queryset(self):
         return Question.objects.order_by('-pub_date')
 
-def handler404(request):
-    response = render_to_response('404.html', {},
-                              context_instance=RequestContext(request))
-    response.status_code = 404
-    return response
+# def handler404(request):
+#     response = render_to_response('404.html', {},
+#                               context_instance=RequestContext(request))
+#     response.status_code = 404
+#     return response
 
 
 class QuestionFullView(DetailView, LoginRequiredMixin):
