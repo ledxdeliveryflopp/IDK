@@ -1,6 +1,6 @@
 <form action="{% url 'vote' question.id %}" method="post">
     {% csrf_token %}
-    {% for question in question_list %}
+    <fieldset>
     {% if question.pub_date < question.life_time %}
             <img src="{{ question.question_image.url }}" alt="connect" style="max-height:150px">
             <h1>{{question.question_text}}</h1>
@@ -10,10 +10,9 @@
             <input type="radio" name="choice" id="choice{{forloop.counter}}" value="{{choice.id}}">
             <label for="choice{{forloop.counter}}">{{choice.choice_text}}</label><br>
             {% endfor %}
-    {% endif %}
-    {% endfor %}
+        </fieldset>
+        <input type="submit" value="Vote">
     {% else %}
-    {% if error_message %}<p><strong> {{error_message}}</strong></p>{% endif %}
-
-    </fieldset>
+        <p><strong>Такого голосования нет</strong></p> :(
+    {% endif %}
 </form>
