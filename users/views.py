@@ -68,6 +68,12 @@ class IndexView(ListView):
     def get_queryset(self):
         return Question.objects.order_by('-pub_date')
 
+def handler404(request):
+    response = render_to_response('404.html', {},
+                              context_instance=RequestContext(request))
+    response.status_code = 404
+    return response
+
 
 class QuestionFullView(DetailView, LoginRequiredMixin):
     """Класс подробного описания голосования"""
