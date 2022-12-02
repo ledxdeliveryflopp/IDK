@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en" class="h-100">
+  <head>
+    <meta charset="utf-8">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'catalog/404.css' %}">
+    {%block title%} <title>Дизайн студия</title> {%endblock%}
+	  <body>
+		<div id="main">
+    	<div class="fof">
+        		<h1><a href="{% url 'index' %}">Error 404</a></h1>
+    	</div>
+</div>
+  </body>

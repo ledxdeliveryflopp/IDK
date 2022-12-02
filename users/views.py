@@ -6,7 +6,7 @@ from django.shortcuts import redirect, get_object_or_404, render
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-from .forms import CustomUserCreationForm, CustomUserChangeForm, CustomAdminChangeForm
+from .forms import CustomUserCreationForm, CustomUserChangeForm
 from .models import Question, CustomUser, Choice
 
 
@@ -49,15 +49,6 @@ class UpdateUser(LoginRequiredMixin, UpdateView):
         if obj.username != self.request.user.username:
             return render(request, '404.html')
         return super(UpdateUser, self).dispatch(request, *args, **kwargs)
-
-
-class UpdateAdmin(LoginRequiredMixin, UpdateView):
-    """Класс обновления дамина"""
-    login_url = 'login'
-    model = CustomUser
-    form_class = CustomAdminChangeForm
-    template_name = 'personal_area/update_admin.html'
-    success_url = reverse_lazy('personal_area')
 
 
 class IndexView(ListView):

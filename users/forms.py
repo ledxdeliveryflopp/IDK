@@ -17,13 +17,6 @@ class CustomUserChangeForm(forms.ModelForm):
         fields = ('username', 'avatar')
 
 
-class CustomAdminChangeForm(forms.ModelForm):
-
-    class Meta:
-        model = CustomUser
-        fields = ('username', 'avatar')
-
-
 class AddQuestion(forms.ModelForm):
 
     class Meta:

@@ -34,11 +34,7 @@
           {% endif %}
           <p class="text">Описание: {{ user.user_info }}</p>
           <a href="{% url 'delete_user' user.id %}"><p><strong>Удалить профиль??</strong></p></a>
-          {% if user.is_staff %}
-            <a href="{% url 'update_admin' user.id %}"><p><strong>Изменить профиль??</strong></p></a>
-          {% else %}
-            <a href="{% url 'update_user' user.id %}"><p><strong>Изменить профиль??</strong></p></a>
-          {% endif %}
+          <a href="{% url 'update_user' user.id %}"><p><strong>Изменить профиль??</strong></p></a>
         </div>
     </div>
     <footer class="mt-auto text-white-50">
